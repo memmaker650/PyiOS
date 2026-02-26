@@ -1,7 +1,7 @@
 import toga
 from toga.style import Pack
 from toga.style.pack import CENTER, COLUMN
-
+from toga.colors import rgb
 
 class HolaMundoApp(toga.App):
     def startup(self):
@@ -12,14 +12,14 @@ class HolaMundoApp(toga.App):
         # Texto inicial encima del botón
         self.label = toga.Label(
             "Pulsa el botón",
-            style=Pack(margin_bottom=20)
+            style=Pack(margin_bottom=20, text_align=CENTER)
         )
 
         # Botón que cambia el texto
         boton = toga.Button(
-            "Mostrar Hola Mundo",
+            "Botón",
             on_press=self.mostrar_hola_mundo,
-            style=Pack(padding=10)
+            style=Pack(margin=10)
         )
 
         main_box.add(self.label)
@@ -31,11 +31,12 @@ class HolaMundoApp(toga.App):
 
     def mostrar_hola_mundo(self, widget):
         self.label.text = "Hola Mundo !"
+        self.label.style.color = rgb(255, 165, 0)
 
 
 def main():
     # Nombre visible y ID de la app (ajústalo a tu dominio)
-    return HolaMundoApp("Hola Mundo", "org.ejemplo.holamundo")
+    return HolaMundoApp("MiAppPy", "org.ejemplo.holamundo", icon="resources/icon.png")
 
 if __name__ == "__main__":
     app = main()
