@@ -3,8 +3,40 @@ from toga.style import Pack
 from toga.style.pack import CENTER, COLUMN, ROW, END
 from toga.colors import rgb
 
+import sqlite3
+import logging
 
 class HolaMundoApp(toga.App):
+    sqliteConnection = 0
+
+    def open_document(self, file):
+        # Ignorar cualquier documento que intente abrir la app
+        return
+        
+    def arrancarDB(self):
+        self.sqliteConnection = sqlite3.connect("./DB/dbiOS.db")
+        cursor = self.sqliteConnection.cursor()
+        logging.info("Successfully Connected to SQLite")
+
+        logging.info('Creación Base de Datos y Tablas principales.')
+        #cursor.execute("""CREATE DATABASE OctoPussyDB""")
+        try:
+            # cursor.execute("""CREATE TABLE partida (id integer PRIMARY KEY, fecha Date, jugador text NOT NULL, puntuacion integer, nivel integer NOT NULL)""")
+            # cursor.execute("""CREATE TABLE estadisticas (id interger PRIMARY KEY, jugador text NOT NULL, partida integer, disparos integer, nivelmax integer NOT NULL, enemigosmuertos integer, vidasusadas integer)""")
+            # sqliteConnection.commit()
+            logging.info('Ejecución SQL creación tablas.')
+        except sqlite3.Error as error:
+            logging.error("Failed to Tables in SQLite", error)
+        finally:
+            logging.info('Tablas DB creadas')
+
+        logging.info('Fin acciones Base de Datos')
+
+    def cerrarDB(self):
+        #Cerramos base de datos
+        self.sqliteConnection.close()
+        logging.info("The SQLite connection is closed")
+
     # -------- Pantalla 1 (inicial) --------
     def construir_pantalla_inicial(self):
         main_box = toga.Box(style=Pack(direction=COLUMN, margin=20))
@@ -109,12 +141,17 @@ class HolaMundoApp(toga.App):
 
     def startup(self):
         self.main_window = toga.MainWindow(title=self.formal_name)
+        self.arrancarDB()
         # Pantalla inicial al arrancar
         self.main_window.content = self.construir_pantalla_inicial()
         self.main_window.show()
 
 
 def main():
+    logging.basicConfig(filename="./log/pyiOS.log", level=logging.DEBUG,
+    format='%(asctime)s.%(msecs)03d %(levelname)s %(module)s - %(funcName)s: %(message)s',datefmt='%Y-%m-%d %H:%M:%S')
+    logging.warning("Inicio pyiOS!!!")
+
     # Nombre visible y ID de la app (ajústalo a tu dominio)
     return HolaMundoApp("MiAppPy", "org.ejemplo.holamundo", icon="resources/icon.png")
 

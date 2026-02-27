@@ -1,0 +1,13 @@
+2026-02-27 10:36:32.742 WARNING pyiOS - main: Inicio pyiOS!!!
+2026-02-27 10:36:32.966 DEBUG selector_events - __init__: Using selector: KqueueSelector
+2026-02-27 10:57:33.522 WARNING pyiOS - main: Inicio pyiOS!!!
+2026-02-27 10:57:33.713 DEBUG selector_events - __init__: Using selector: KqueueSelector
+2026-02-27 10:58:02.943 WARNING pyiOS - main: Inicio pyiOS!!!
+2026-02-27 10:58:03.034 DEBUG selector_events - __init__: Using selector: KqueueSelector
+2026-02-27 11:01:23.172 WARNING pyiOS - main: Inicio pyiOS!!!
+2026-02-27 11:01:23.272 DEBUG selector_events - __init__: Using selector: KqueueSelector
+2026-02-27 11:01:23.671 INFO pyiOS - arrancarDB: Successfully Connected to SQLite
+2026-02-27 11:01:23.671 INFO pyiOS - arrancarDB: Creación Base de Datos y Tablas principales.
+2026-02-27 11:01:23.671 INFO pyiOS - arrancarDB: Ejecución SQL creación tablas.
+2026-02-27 11:01:23.671 INFO pyiOS - arrancarDB: Tablas DB creadas
+2026-02-27 11:01:23.671 INFO pyiOS - arrancarDB: Fin acciones Base de Datos
