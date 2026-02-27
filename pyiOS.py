@@ -19,14 +19,14 @@ class HolaMundoApp(toga.App):
         logging.info("Successfully Connected to SQLite")
 
         logging.info('Creación Base de Datos y Tablas principales.')
-        #cursor.execute("""CREATE DATABASE OctoPussyDB""")
         try:
-            # cursor.execute("""CREATE TABLE partida (id integer PRIMARY KEY, fecha Date, jugador text NOT NULL, puntuacion integer, nivel integer NOT NULL)""")
-            # cursor.execute("""CREATE TABLE estadisticas (id interger PRIMARY KEY, jugador text NOT NULL, partida integer, disparos integer, nivelmax integer NOT NULL, enemigosmuertos integer, vidasusadas integer)""")
-            # sqliteConnection.commit()
-            logging.info('Ejecución SQL creación tablas.')
+           cursor.execute("""CREATE TABLE datos (id integer PRIMARY KEY, fecha Date, datos text NOT NULL, km integer NOT NULL, activo BOOLEAN NOT NULL)""")
+           cursor.execute("""CREATE TABLE estadisticas (id interger PRIMARY KEY, jugador text NOT NULL, partida integer, disparos integer, nivelmax integer NOT NULL, enemigosmuertos integer, vidasusadas integer)""")
+           self.sqliteConnection.commit()
+           logging.info('Ejecución SQL creación tablas.')
         except sqlite3.Error as error:
-            logging.error("Failed to Tables in SQLite", error)
+            logging.error("Error al crear Tablas en SQLite", error)
+            logging.error("Tablas ya existen en SQLite")
         finally:
             logging.info('Tablas DB creadas')
 
@@ -103,6 +103,11 @@ class HolaMundoApp(toga.App):
             style=Pack(margin_bottom=20, text_align=CENTER)
         )
 
+        self.entrada_texto = toga.TextInput(
+            placeholder="Escribe algo...",
+            style=Pack(width=300, margin_bottom=10)
+        )
+
         boton_mostrar_texto = toga.Button(
             "Mostrar texto",
             on_press=self.mostrar_texto_segunda,
@@ -110,6 +115,7 @@ class HolaMundoApp(toga.App):
         )
 
         contenido_box.add(self.label_pantalla_dos)
+        contenido_box.add(self.entrada_texto)
         contenido_box.add(boton_mostrar_texto)
 
         espaciador = toga.Box(style=Pack(flex=1))
@@ -134,7 +140,8 @@ class HolaMundoApp(toga.App):
         return main_box
 
     def mostrar_texto_segunda(self, widget):
-        self.label_pantalla_dos.text = "Texto de la segunda pantalla"
+        texto = (self.entrada_texto.value or "").strip()
+        self.label_pantalla_dos.text = texto if texto else "No has escrito nada"
 
     def volver_pantalla_inicial(self, widget):
         self.main_window.content = self.construir_pantalla_inicial()
